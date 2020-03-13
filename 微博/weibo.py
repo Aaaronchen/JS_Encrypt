@@ -29,7 +29,7 @@ class WeiBoLogin(object):
         s_user_name = self.get_username()
         json_data = self.get_json_data(su_value=s_user_name)
         if not json_data:
-            return False
+            return None
         s_pass_word = self.get_password(json_data["servertime"], json_data["nonce"], json_data["pubkey"])
 
         # make post_data
@@ -64,24 +64,32 @@ class WeiBoLogin(object):
             post_data["door"] = code
 
         # login weibo.com
-        login_url_1 = "http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.18)&_=%d" % int(time.time())
+        login_url_1 = "http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.19)&_=%d" % int(time.time())
         json_data_1 = self.session.post(login_url_1, data=post_data).json()
+        print('ssologin:',json_data_1)
         if json_data_1["retcode"] == "0":
             params = {
                 "callback": "sinaSSOController.callbackLoginStatus",
-                "client": "ssologin.js(v1.4.18)",
+                "client": "ssologin.js(v1.4.19)",
                 "ticket": json_data_1["ticket"],
                 "ssosavestate": int(time.time()),
                 "_": int(time.time()*1000),
             }
             response = self.session.get("https://passport.weibo.com/wbsso/login", params=params)
+            print('passport:',response.text)
             json_data_2 = json.loads(re.search(r"\((?P<result>.*)\)", response.text).group("result"))
             if json_data_2["result"] is True:
                 self.user_uniqueid = json_data_2["userinfo"]["uniqueid"]
                 self.user_nick = json_data_2["userinfo"]["displayname"]
                 print("WeiBoLogin succeed ！: %s", json_data_2)
+                print('cookies:',response.cookies)
+                return{
+                    'status': 1,
+                    'content': response.cookies
+                }
             else:
                 print("WeiBoLogin failed: %s", json_data_2)
+                return None
         else:
             print("WeiBoLogin failed: %s", json_data_1)
         return True if self.user_uniqueid and self.user_nick else False
@@ -99,7 +107,7 @@ class WeiBoLogin(object):
             "callback": "sinaSSOController.preloginCallBack",
             "rsakt": "mod",
             "checkpin": "1",
-            "client": "ssologin.js(v1.4.18)",
+            "client": "ssologin.js(v1.4.19)",
             "su": su_value,
             "_": int(time.time()*1000),
         }
@@ -124,4 +132,4 @@ class WeiBoLogin(object):
 
 if __name__ == "__main__":
     weibo = WeiBoLogin()
-    weibo.login("账号", "密码")
+    weibo.login("h5oyqb4hwz@chaliivi.fun", "azlmseyw")

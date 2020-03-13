@@ -7,4 +7,6 @@
 
 [翻译](https://github.com/Aaaronchen/JS_Encrypt/tree/master/翻译) 19年JS 内置百度，谷歌，网易翻译js调用翻译
 
+[文书](https://github.com/Aaaronchen/JS_Encrypt/tree/master/文书) 19年10月后JS nodejs服务，cookie未处理
+
 本案例仅为个人学习研究用途，请勿商用

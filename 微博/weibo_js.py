@@ -1,8 +1,8 @@
 import execjs,json,requests,time,re
 from urllib.parse import quote
 
-user = "账号"  ### 输入账号密码 适用于手机号
-pw = "密码"
+user = "h5oyqb4hwz@chaliivi.fun"  ### 输入账号密码 适用于手机号
+pw = "azlmseyw"
 
 '''###非调用js方法
 def get_username(user_name):
@@ -37,7 +37,6 @@ headers = {
     'referer':'https://weibo.com/',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
 }
-
 
 s = requests.session()
 resu = s.get(burl).content.decode('gbk')
