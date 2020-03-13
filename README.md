@@ -9,4 +9,6 @@
 
 [文书](https://github.com/Aaaronchen/JS_Encrypt/tree/master/文书) 19年10月后JS nodejs服务，cookie未处理
 
+[天气](https://github.com/Aaaronchen/JS_Encrypt/tree/master/天气) 某aqi天气网JS及python加密版
+
 本案例仅为个人学习研究用途，请勿商用
