@@ -11,4 +11,11 @@
 
 [天气](https://github.com/Aaaronchen/JS_Encrypt/tree/master/天气) 某aqi天气网JS及python加密版
 
+[加速乐](https://github.com/Aaaronchen/JS_Encrypt/tree/master/加速乐) js加速乐cookie值
+
+[美团](https://github.com/Aaaronchen/JS_Encrypt/tree/master/加速乐) js破解生成token值python版
+
+[geetest3](https://github.com/Aaaronchen/JS_Encrypt/tree/master/geetest3) fullpage/slide js解绑
+
+
 本案例仅为个人学习研究用途，请勿商用
