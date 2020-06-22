@@ -15,7 +15,8 @@
 
 [美团](https://github.com/Aaaronchen/JS_Encrypt/tree/master/加速乐) js破解生成token值python版
 
-[geetest3](https://github.com/Aaaronchen/JS_Encrypt/tree/master/geetest3) fullpage/slide js解绑
+[geetest3](https://github.com/Aaaronchen/JShttps://github.com/Aaaronchen/JS_Encrypt/tree/master/%E5%A4%B4%E6%9D%A1_Encrypt/tree/master/geetest3) fullpage/slide js解绑
 
+[头条](https://github.com/Aaaronchen/JS_Encrypt/tree/master/头条) js调用，外加wensocket版本
 
 本案例仅为个人学习研究用途，请勿商用
