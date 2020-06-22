@@ -2,6 +2,7 @@ const app1 = require('./http')
 const res1 = require('./data')
 const e = require('./baidu')
 const wenshu = require('./wenshu')
+const toutiao = require('./toutiao')
 var url = require('url');
 const des = require('./des')
 const querystring = require("querystring");
@@ -61,6 +62,11 @@ app1.get('/get_uuid/', (req, res) => {
   res.json(sign)
 })
 
+app1.get('/get_sign/', (req, res) => {
+  var sign = toutiao.get_sign()
+  res.status(200)
+  res.json(sign)
+})
 
 const server = app1.listen(3000, () => {
   const host = server.address().address

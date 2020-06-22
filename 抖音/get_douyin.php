@@ -42,6 +42,14 @@ function get_curl($url,$post=0,$referer=0,$cookie=0,$header=0,$ua=0,$nobaody=0,$
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
 	if($location)curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 2);
 	$ret = curl_exec($ch);
+
+	if($nobaody){
+		$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+		// 根据头大小去获取头信息内容
+		$header = substr($ret, 0, $headerSize);
+		curl_close($ch);
+		return $header;
+	}
 	curl_close($ch);
 	return $ret;
 }
@@ -77,7 +85,9 @@ if($_GET['action']=='getjs'){
 	$dytk=$_POST['dytk'];
 	$signature=$_POST['signature'];
 	$ua=$_SERVER['HTTP_USER_AGENT'];
-	$data=get_curl('https://www.douyin.com/aweme/v1/aweme/post/?user_id='.$uid.'&count=80&max_cursor=0&aid=1128&_signature='.$signature.'&dytk='.$dytk,0,0,0,0,$ua);
+	$data=get_curl('https://www.iesdouyin.com/web/api/v2/aweme/post/?user_id='.$uid.'&count=21&max_cursor=0&aid=1128&_signature='.$signature.'&dytk='.$dytk,0,0,0,0,$ua);
+	//echo $data;
+
 	$arr=json_decode($data,true);
 	if($arr['aweme_list']){
 		$code=0;
@@ -86,6 +96,38 @@ if($_GET['action']=='getjs'){
 		$code=1;
 		$msg='获取失败，请重新复制抖音链接';
 	}
-	$result=array('code'=>$code,'data'=>$arr['aweme_list'],'msg'=>$msg,'url'=>'https://www.douyin.com/aweme/v1/aweme/post/?user_id='.$uid.'&count=80&max_cursor=0&aid=1128&_signature='.$signature.'&dytk='.$dytk,'uid'=>$uid);
+	$result=array('code'=>$code,'data'=>$arr['aweme_list'],'msg'=>$msg,'url'=>'https://www.iesdouyin.com/web/api/v2/aweme/post/?user_id='.$uid.'&count=21&max_cursor=0&aid=1128&_signature='.$signature.'&dytk='.$dytk,'uid'=>$uid,'max_cursor'=>$arr['max_cursor'],'has_more'=>$arr['has_more']);
 	exit(json_encode($result));
+}elseif($_GET['action']=='getlist2'){
+	$uid=$_POST['uid'];
+	$dytk=$_POST['dytk'];
+	$signature=$_POST['signature'];
+	$max_cursor=$_POST['max_cursor'];
+	$ua=$_SERVER['HTTP_USER_AGENT'];
+	$data=get_curl('https://www.iesdouyin.com/web/api/v2/aweme/post/?user_id='.$uid.'&count=21&max_cursor='.$max_cursor.'&aid=1128&_signature='.$signature.'&dytk='.$dytk,0,0,0,0,$ua);
+	//echo $data;
+
+	$arr=json_decode($data,true);
+	if($arr['aweme_list']){
+		$code=0;
+		$msg='获取成功';
+	}else{
+		$code=1;
+		$msg='获取失败，请重新复制抖音链接';
+	}
+	$result=array('code'=>$code,'data'=>$arr['aweme_list'],'msg'=>$msg,'url'=>'https://www.iesdouyin.com/web/api/v2/aweme/post/?user_id='.$uid.'&count=21&max_cursor='.$max_cursor.'&aid=1128&_signature='.$signature.'&dytk='.$dytk,'uid'=>$uid,'max_cursor'=>$arr['max_cursor'],'has_more'=>$arr['has_more']);
+	exit(json_encode($result));
+}elseif($_GET['action']=='get_palyaddress'){
+	$url=$_POST['url'];
+	$ua="Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Mobile Safari/537.36";//$_SERVER['HTTP_USER_AGENT'];
+	$data=get_curl($url,0,0,0,1,$ua,1);
+	$headArr = explode("\r\n", $data);
+	foreach ($headArr as $loop) {
+		if(strpos($loop, "location") !== false){
+			$edengUrl = trim(substr($loop, 10));
+			//print_r($edengUrl);
+			$result=array('result'=>$edengUrl);
+			exit(json_encode($result));
+		}
+	}
 }
